@@ -1,0 +1,183 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+   <record model="ir.ui.view" id="pharmacy.list_view">
+      <field name="name">pharmacy list</field>
+      <field name="model">pharmacy.medicine</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+        </tree>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="pharmacy.medicine_list_view">
+      <field name="name">pharmacy list</field>
+      <field name="model">pharmacy.medicine</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="description"/>
+          <field name="price"/>
+          <field name="manifacturer"/>
+        </tree>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="pharmacy.orderlines_list_view">
+      <field name="name">pharmacy list</field>
+      <field name="model">pharmacy.orderlines</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="medicine"/>
+          <field name="unit_price"/>
+          <field name="quantity"/>
+          <field name="sub_total"/>
+        </tree>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="pharmacy.orders_list_view">
+      <field name="name">pharmacy list</field>
+      <field name="model">pharmacy.orders</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="customer"/>
+          <!-- <field name="date"/> -->
+          <field name="orderlines"/>
+          <field name="total_price"/>
+        </tree>
+      </field>
+    </record>
+
+
+<record model="ir.ui.view" id="pharmacy.medicine_form_view">
+      <field name="name">medicine form</field>
+      <field name="model">pharmacy.medicine</field>
+      <field name="arch" type="xml">
+        <form>
+        <group>
+          <field name="name"/>
+          <field name="description"/>
+          <field name="price"/>
+          <field name="manifacturer"/>
+          </group>
+        </form>
+        
+      </field>
+    </record>
+    <record model="ir.ui.view" id="pharmacy.orderlines_form_view">
+      <field name="name">order lines form</field>
+      <field name="model">pharmacy.orderlines</field>
+      <field name="arch" type="xml">
+        <form>
+        <group>
+          <field name="medicine"/>
+          <field name="unit_price"/>
+          <field name="quantity"/>
+          <field name="sub_total"/>
+          </group>
+        </form>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="pharmacy.orders_form_view">
+      <field name="name">orders form</field>
+      <field name="model">pharmacy.orders</field>
+      <field name="arch" type="xml">
+        <form>
+        <group>
+          <field name="customer"/>
+          <field name="orderlines"/>
+          <field name="total_price"/>
+          <!-- <field name="date"/> -->
+          </group>
+        </form>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="pharmacy.medicine_action_window">
+      <field name="name">pharmacy window</field>
+      <field name="res_model">pharmacy.medicine</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+     <record model="ir.actions.act_window" id="pharmacy.orders_action_window">
+      <field name="name">pharmacy window</field>
+      <field name="res_model">pharmacy.orders</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+     <record model="ir.actions.act_window" id="pharmacy.orderlines_action_window">
+      <field name="name">pharmacy window</field>
+      <field name="res_model">pharmacy.orderlines</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    
+
+
+    <!-- server action to the one above -->
+
+    <record model="ir.actions.server" id="pharmacy.medicine_action_server">
+      <field name="name">pharmacy server</field>
+      <field name="model_id" ref="model_pharmacy_medicine"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+    <record model="ir.actions.server" id="pharmacy.orders_action_server">
+      <field name="name">pharmacy server</field>
+      <field name="model_id" ref="model_pharmacy_orders"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+    <record model="ir.actions.server" id="pharmacy.orderlines_action_server">
+      <field name="name">pharmacy server</field>
+      <field name="model_id" ref="model_pharmacy_orderlines"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+
+
+    <!-- Top menu item -->
+
+    <menuitem name="medicine" id="pharmacy.medicine_menu_root"/>
+    <menuitem name="orders" id="pharmacy.orders_menu_root"/>
+    <menuitem name="orderlines" id="pharmacy.orderlines_menu_root"/>
+
+    <!-- menu categories -->
+
+    <menuitem name="Menu 1" id="pharmacy.medicine_menu_1" parent="pharmacy.medicine_menu_root"/>
+        <menuitem name="Menu 1" id="pharmacy.orders_menu_1" parent="pharmacy.orders_menu_root"/>
+ <menuitem name="Menu 1" id="pharmacy.orderlines_menu_1" parent="pharmacy.orderlines_menu_root"/>
+
+    <!-- <menuitem name="Menu 2" id="pharmacy.menu_2" parent="pharmacy.menu_root"/> -->
+
+    <!-- actions -->
+
+    <menuitem name="Medicine" id="pharmacy.medicine_menu_1_list" parent="pharmacy.medicine_menu_1"
+              action="pharmacy.medicine_action_window"/>
+    <menuitem name="Orders" id="pharmacy.order_menu_1_list" parent="pharmacy.orders_menu_1"
+              action="pharmacy.orders_action_window"/>
+    <menuitem name="Order Lines" id="pharmacy.orderline_menu_1_list" parent="pharmacy.orderlines_menu_1"
+              action="pharmacy.orderlines_action_window"/>
+    <!-- <menuitem name="Server to list" id="pharmacy" parent="pharmacy.menu_2"
+              action="pharmacy.action_server"/> -->
+
+  </data>
+</odoo>

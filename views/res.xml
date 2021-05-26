@@ -1,0 +1,34 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="res_partner_form_inherit">
+            <field name="name">pharmacy.customer</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+               <field name="phone" position="after">
+					<field name="name" />
+				</field>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="res_partener_view_inherit">
+            <field name="name">pharmacy.customer</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <field name="phone" position="after">
+					<field name="name" />
+				</field>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="res_partner_action">
+            <field name="name">Custom Partner</field>
+            <field name="res_model">res.partner</field>
+            <!-- <field name="view_type">form</field> -->
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- top level menu: no parent -->
+
+        <menuitem id="res_partner_menu" name="Customer" action="res_partner_action"/>
+    </data>
+</odoo>
